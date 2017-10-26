@@ -1,13 +1,14 @@
 ﻿function managerFile(fs,wayName,fileName){
-	let route = {
+	let route = { 
 		way : wayName+'/public/user/'+fileName,
-		positionWay : 'http://ganjz.cn:3000/user/'+fileName,
+		positionWay : 'http://ganjz.cn/user/'+fileName,
 		imgArr : {}
 	}
 	let exi = new Promise(function(resolve,reject){
 			fs.exists(route.way,function(obj,err){  // 检查目录是否存在
-				if(err)
+				if(err){
 					reject(err);
+				}
 				resolve(obj);
 			});	
 	})
@@ -20,8 +21,10 @@
 				else
 					return new Promise(function(resolve,reject){
 						fs.mkdir(route.way,function(err){
-							if(err)
+							if(err){
 								console.log(err+'创建目录出错');
+								console.log('出错')
+							}
 							else
 							  resolve("创建成功")
 						});		
@@ -37,8 +40,10 @@
 				else
 					return new Promise(function(resolve,reject){
 						fs.rmdir(route.way,function(err){
-							if(err)
+							if(err){
 								console.log(err+'删除目录出错');
+								console.log('出错')
+							}
 							else
 							resolve("删除成功")
 						});		
@@ -81,7 +86,6 @@
 								value = val[key];
 								
 							}
-							 
 						    base64Data = value.replace(/^data:image\/\w+;base64,/, "").replace(/\s/g,"+");
 						    type = value.split(';base64')[0].split('/')[1].trim().toLowerCase();
 						    route.imgArr[name] = route.positionWay+'/'+ name +'.' +type;

@@ -26,8 +26,7 @@ var findPPT = function(pptArr,users,obj,fn){ //obj 查询条件 {page:1,sort:1,t
 	}
 	pptArr.find({"_id":{
 			"$in" : pptIds
-		}}).count(function(err,count){
-			
+		}}).count(function(err,count){	
 			var query=pptArr.find({"_id":{
 				"$in" : pptIds
 			}});
@@ -62,52 +61,6 @@ var findPPT = function(pptArr,users,obj,fn){ //obj 查询条件 {page:1,sort:1,t
 				fn && fn(returnObj,Math.ceil(count/ pageNum));
 			})
 	});
-	
-	
-	
-	//
-
-	/*
-	
-	*/
-	
 }
 
 module.exports = findPPT;
-
-
-	/*pptArr.find({  //先对整个ppt进行排序
-		"_id":{
-			"$in" : pptIds
-		}
-	},function(err,ppt){
-		if(err)
-			console.log(err);
-		ppt.function(err,ppt){
-				for(var i = 0;i<ppt.length;i++){
-					ppts = ppt[i];
-					if(ppts.sectionObj[0]){
-						sectionObj = JSON.parse(ppts.sectionObj[0]);
-						sectionObj.length = 1;
-						sectionObj = JSON.stringify(sectionObj);
-					}
-					else{
-						sectionObj = null;
-					}
-					
-					returnObj.push({
-						pageAll : pageAll,
-						pptName : ppts.pptName,
-						_id : ppts._id,
-						pptCreateDate : ppts.pptCreateDate,
-						pptLastAlterDate : ppts.pptLastAlterDate,
-						public : ppts.public,
-						psWord : ppts.psWord,
-						sectionObj : sectionObj||null
-					})
-				}
-				
-				fn && fn(returnObj);
-		}).sort(sort).skip((page-1)*pageNum+1).limit(6);
-	}
-			*/

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+	body{
+		overflow:auto;
+	}
+</style>
+<body>
+
+</body>
+<script type="text/javascript">
+	const url = './music.mp3';
+	var analyser;
+	function loadMusic(){
+        let request = new XMLHttpRequest(); //建立一个请求
+        let that;
+        let audio = new window["AudioContext"]();
+        request.open('GET', url, true); //配置好请求类型，文件路径等
+        request.responseType = 'arraybuffer'; //配置数据返回类型
+        // 一旦获取完成，对音频进行进一步操作，比如解码
+        request.onload = function() {
+            // that.buffer = request.response;
+            
+            audio.decodeAudioData(request.response,function(buffer){
+                 analyser = audio.createAnalyser();
+                var audioBufferSouceNode = audio.createBufferSource();
+                audioBufferSouceNode.buffer = buffer;
+                audioBufferSouceNode.connect(analyser);  //获取频谱
+                analyser.connect(audio.destination);  //链接喇叭
+                audioBufferSouceNode.start(0);
+                setInterval(function(){
+                	console.log(111)
+			    	parseMusic();
+			    },120);
+            })
+        }
+        request.send();
+    }
+    function parseMusic(){ //解析频谱
+    	var array = new Uint8Array(analyser.frequencyBinCount);
+    	let val;
+		analyser.getByteFrequencyData(array);
+		
+		console.log(array);
+		 for(let i = 0;i<array.length;i++){
+		 	val = array[i];
+		 	if(val>10){
+					document.body.style.background =getRandomColor();
+					return true;
+			}
+		 }
+		
+    }
+    function getRandomColor() 
+	{ 
+		var c = '#'; 
+		var cArray = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F']; 
+		for(var i = 0; i < 6;i++) 
+		{ 
+		var cIndex = Math.round(Math.random()*15); 
+		c += cArray[cIndex]; 
+		} 
+		return c; 
+	} 
+    
+    loadMusic();
+</script>
+</html>

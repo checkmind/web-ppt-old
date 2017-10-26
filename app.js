@@ -227,8 +227,15 @@ app.post('/sendAllImg', function(req, res){
     
     
 });
+var access_token;
+// require('./wx.js')(function(data){
+// 	access_token = data;
+// 	console.log(access_token);
+// });
+var oauth = require('./wxLogin.js');
+app.use('/', oauth);
 
-var server = app.listen(function () {
+var server = app.listen(80,function () {
 
   var host = server.address().address
   var port = server.address().port

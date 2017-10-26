@@ -77,7 +77,6 @@ var savePPT = function(pptArr,users,req,imgDate,fn){
 	return (function(){
 			pptArr.findOne({'_id' : pptId },function(err,ppts){
 				upDatePPT.imgArr = imgDate;
-
 				upDatePPT.pptArr = ppts;
 				sectionObj = JSON.parse(sectionObj);
 					sectionObj.forEach(function(val,index){
@@ -90,24 +89,6 @@ var savePPT = function(pptArr,users,req,imgDate,fn){
 						else
 							fn&&fn.apply(that,arguments);
 					});
-						
-				
-				
-				/*
-				console.log(sectionObj);
-				[  {"name":"addEle","json":{"id":"58da9104fa80170964360549_0e1","type":"div","html":"点击添加内容","page":0}},
-				   {"name":"addEleStyle","json":{"id":"58da9104fa80170964360549_0e1","type":"block","name":"left","str":"30%","page":0}},
-				   {"name":"addEleStyle","json":{"id":"58da9104fa80170964360549_0e1","type":"block","name":"top","str":"40%","page":0}},
-				   {"name":"addEleStyle","json":{"id":"58da9104fa80170964360549_0e1","type":"text","name":"value","str":"点击dsf添加内容","page":0}}
-				 ]
-				 */
-				/*
-				ppts.update({'sectionObj':sectionObj,'pptLastAlterDate': new Date()},function(err){
-					if(err)
-						return false;
-					fn&&fn.apply(that,arguments);
-				});
-				*/
 			});
 			
 	})();

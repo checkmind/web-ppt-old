@@ -45,7 +45,7 @@
 			/*********************section dom****************/
 			headTitle : "<div class=\"page\">\
 						 </div>",
-			pageGoTo : "<div class=\"cPage\"></div>",
+			pageGoTo : "<div class='pageContain'><div class=\"cPage\"></div></div>",
 			/***************************pptList *************/
 			myPPTList : "<div class=\"myPPTList\">\
 							<div class=\"myPPThead\">\

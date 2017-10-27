@@ -1,4 +1,4 @@
-﻿!(function(window,undefine){
+!(function(window,undefine){
 /*
 	1，字体大小调整不精确
 	2，模拟placeholder没完成
@@ -607,6 +607,42 @@
 			}
 			return false;
 		}
+		/*
+			obj:
+				ev : ev,
+				isChild : true
+		*/
+		let rightMouseEvent = function(ev){
+			let clickFn = [{
+							name : '删除',
+						},{
+							name : '超链接'
+						},{
+							name : '属性'
+						}];
+
+			let els = '';
+			let domType = {
+				cPage : ['删除','移动'],
+				dom : ['删除','链接','属性']
+			}
+			let domList;
+			let classType = ev.target.className;
+			
+			for(var key in domType){
+				if(new RegExp(key).test(classType)){
+					domList = domType[key];
+				}
+			}
+			if(!domList)
+				return;
+
+			domList.forEach(function(val,index){
+				els += `<li>${val}</li>`;
+			})
+			$(".rightMouse").html(els);
+			
+		}
 		$("section").mousemove(function(ev){   //鼠标样式
 			var ev = ev || window.event;
 			var target = ev.target||ev.srcElement;
@@ -631,7 +667,7 @@
 				_cursor($(target).parents('.dom'));
 			}	 
 		});
-		$("section").mousedown(function(ev){  
+		$("body").mousedown(function(ev){  
 			var ev = ev || window.event;
 			var target = ev.target||ev.srcElement;
 			var className = target.className;
@@ -646,8 +682,18 @@
 			x = ev.clientX;
 			y = ev.clientY;
 			
-			if(ev.button==2)
-				console.log('右键');
+			if(ev.button==2){
+				rightMouseEvent(ev);
+				$(".rightMouse").css({
+					display : 'block',
+					left : x+'px',
+					top : y+'px'
+				})
+				return;
+			}else{
+				//$(".rightMouse").hide();	
+			}
+			
 			if(ev.button==0&&isImg){ //如果是图片
 				ev.preventDefault();
 				$(target).parents('.dom').focus().css('outline','red');
